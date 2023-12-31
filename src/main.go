@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"skn-go-practice/src/pkgs/functions"
+	"skn-go-practice/src/pkgs/shared"
+	"skn-go-practice/src/pkgs/user"
 	"strings"
 )
 
@@ -32,7 +34,7 @@ func main() {
 
 	var array []string
 
-	array = append(array, "Wang")
+	array = append(array, "Wang") //* append doesn't change the slice but instead returns a new array
 	array = append(array, "So")
 
 	fmt.Printf("Array: %v\n", array)
@@ -104,4 +106,39 @@ func main() {
 
 	fmt.Printf("%v %v %v\n", num1, num2, num3)
 
+	type User struct {
+		firstName string
+		lastName  string
+		bookCount uint8
+	}
+
+	var users = User{
+		firstName: "gh",
+		lastName:  "hgh",
+		bookCount: 4,
+	}
+
+	var userArray []User
+
+	userArray = append(userArray, users)
+
+	fmt.Printf("user: %v\n", userArray)
+
+	//for {
+	var user2 user.UserType = user.GetUserInput()
+
+	//* Goroutine works fine in loop
+	//* If There is no loop then "main" thread will not let another thread to execute code with 'go' keyword
+	//* In this case, "Workgroups" have to be used
+	shared.Wg.Add(2)              //* `Add` sets the number of Goroutine to wait for
+	go user.GetUserConfirmation() //* Goroutine (Concurrence) can be used with 'go' keyword
+
+	fmt.Printf("User: %v\n", user2)
+
+	go user.GetUserCertificate()
+
+	//}
+	//*
+	shared.Wg.Wait() //* It should be at the end of "Main" thread code
+	//* wg.Wait() blocks until the WaitGroup count is 0 which is set by wg.Add()
 }
