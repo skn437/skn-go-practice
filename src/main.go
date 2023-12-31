@@ -137,6 +137,35 @@ func main() {
 
 	go user.GetUserCertificate()
 
+	fmt.Println("#############")
+	//* Slice Ranges
+	var newSlice []string = []string{"Wang", "So", "SKN", "Shukhan"}
+
+	var range1 = newSlice[1:3] //* Slice Range [x:y] means 'From x until y'
+	var range2 = newSlice[1:]  //* Slice Range [x:] means 'From x till the end'
+	var range3 = newSlice[:3]  //* Slice Range [:y] means 'From the start until y'
+
+	fmt.Printf("New Slice Range1: %v 👍 \n", range1)
+	fmt.Printf("New Slice Range2: %v 👍 \n", range2)
+	fmt.Printf("New Slice Range3: %v 👍 \n", range3)
+
+	//* `Strings` Standard Library
+	var newString string = "hello, I am Wang So!"
+
+	var newString1 string = strings.ReplaceAll(newString, "hello", "hi") //* Replace All
+	fmt.Printf("New String1: %s \n", newString1)
+
+	var newString2 string = strings.ToUpper(newString) //* To Upper Case. There is also Lower Case.
+	fmt.Printf("New String2: %s \n", newString2)
+
+	var index int = strings.Index(newString, "I") //* If the item is not found then the index will be `-1`
+	fmt.Printf("Index: %v \n", index)
+
+	var splitString []string = strings.Split(newString, " ") //* Splits String
+	fmt.Printf("Split String Slice: %v \n", splitString)
+
+	fmt.Printf("New String: %s \n", newString)
+
 	//}
 	//*
 	shared.Wg.Wait() //* It should be at the end of "Main" thread code
