@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"skn-go-practice/src/pkgs/functions"
-	"skn-go-practice/src/pkgs/shared"
 	"skn-go-practice/src/pkgs/user"
+	"skn-go-practice/src/pkgs/utils"
+	"sort"
 	"strings"
 )
 
 func main() {
+	var wg = utils.GetWg()
+
 	var name string = "SKN"
 
 	const authorId string = "skn437"
@@ -130,7 +133,8 @@ func main() {
 	//* Goroutine works fine in loop
 	//* If There is no loop then "main" thread will not let another thread to execute code with 'go' keyword
 	//* In this case, "Workgroups" have to be used
-	shared.Wg.Add(2)              //* `Add` sets the number of Goroutine to wait for
+
+	wg.Add(2)                     //* `Add` sets the number of Goroutine to wait for
 	go user.GetUserConfirmation() //* Goroutine (Concurrence) can be used with 'go' keyword
 
 	fmt.Printf("User: %v\n", user2)
@@ -166,8 +170,34 @@ func main() {
 
 	fmt.Printf("New String: %s \n", newString)
 
+	//* `Sort` Standard Library
+	var numberSlice []int = []int{7, 4, 3, 1, 0}
+	sort.Ints(numberSlice) //* sort.Ints sorts integer slices & change the original slice
+	fmt.Printf("Sorted Number Slice: %v \n", numberSlice)
+
+	var intIndex int = sort.SearchInts(numberSlice, 7)
+	fmt.Printf("Number Slice Index of 7: %v \n", intIndex)
+
+	var stringSlice []string = []string{"Wang", "So", "Shukhan", "SKN"}
+	sort.Strings(stringSlice) //* sort.Strings sorts string slices & change the original slice
+	fmt.Printf("Sorted String Slice: %v \n", stringSlice)
+
+	var stringIndex int = sort.SearchStrings(stringSlice, "Wang")
+	fmt.Printf("String Slice Index of Wang: %v \n", stringIndex)
+
+	//* function as argument
+	var nameSlice []string = []string{"Wang", "So", "SKN", "Shukhan"}
+
+	utils.GetCycle(nameSlice, utils.GetGreeting)
+
+	var fn1, ln1 string = utils.GetInitials("Wang So")
+	fmt.Printf("First Name: %s & Last Name: %s \n", fn1, ln1)
+
+	var fn2, ln2 string = utils.GetInitials("Wang So")
+	fmt.Printf("First Name: %s & Last Name: %s \n", fn2, ln2)
+
 	//}
-	//*
-	shared.Wg.Wait() //* It should be at the end of "Main" thread code
+
+	wg.Wait() //* It should be at the end of "Main" thread code
 	//* wg.Wait() blocks until the WaitGroup count is 0 which is set by wg.Add()
 }

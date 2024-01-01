@@ -2,9 +2,11 @@ package user
 
 import (
 	"fmt"
-	"skn-go-practice/src/pkgs/shared"
+	"skn-go-practice/src/pkgs/utils"
 	"time"
 )
+
+var wg = utils.GetWg()
 
 func GetUserInput() UserType {
 	var firstName string
@@ -38,7 +40,7 @@ func GetUserConfirmation() {
 
 	fmt.Printf("%s\n", confirmation)
 
-	shared.Wg.Done() //* wg.Done() decreases the WaitGroup count by 1
+	wg.Done() //* wg.Done() decreases the WaitGroup count by 1
 }
 
 func GetUserCertificate() {
@@ -49,5 +51,5 @@ func GetUserCertificate() {
 
 	fmt.Println("User Ticket Is Ready!")
 
-	shared.Wg.Done()
+	wg.Done()
 }
