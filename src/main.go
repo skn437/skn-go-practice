@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"skn-go-practice/src/pkgs/components"
 	"skn-go-practice/src/pkgs/functions"
 	"skn-go-practice/src/pkgs/user"
 	"skn-go-practice/src/pkgs/utils"
@@ -197,6 +198,16 @@ func main() {
 	fmt.Printf("First Name: %s & Last Name: %s \n", fn2, ln2)
 
 	//}
+
+	//* Receiver Function
+
+	var myBills components.BillType = components.GetBill("Wang So")
+
+	fmt.Println(myBills.Format())
+
+	var user1 utils.DataType = utils.GetData()
+
+	fmt.Println(user1.Format())
 
 	wg.Wait() //* It should be at the end of "Main" thread code
 	//* wg.Wait() blocks until the WaitGroup count is 0 which is set by wg.Add()
