@@ -1,7 +1,12 @@
 package components
 
 import (
+	"bufio"
 	"fmt"
+	"log"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func GetBill(name string) *BillType {
@@ -50,4 +55,88 @@ func (bill *BillType) Format() string { //* Receiver Function Only Available On 
 	formattedString += fmt.Sprintf("%-25s $%v \n", "Total:", total+bill.tip)
 
 	return formattedString
+}
+
+func getPrompt(prompt string, reader *bufio.Reader) (string, error) {
+	fmt.Print(prompt)
+
+	input, error := reader.ReadString('\n') //* You must use '' in ReadString. You can't use ""
+
+	input = strings.TrimSpace(input)
+
+	return input, error
+}
+
+func getBillOptions(bill *BillType) {
+	var reader *bufio.Reader = bufio.NewReader(os.Stdin)
+
+	const optionString string = `
+	Choose an option:
+	(a) Press 'a' to add an item
+	(b) Press 't' to add a tip
+	(c) Press 's' to save the bill
+	Your Choice: `
+
+	option, _ := getPrompt(optionString, reader)
+
+	switch option {
+	case "a":
+		var item ItemType = ItemType{}
+
+		title, _ := getPrompt("Enter Item Name: ", reader)
+		item.title = title
+
+		count, _ := getPrompt("Enter Item Count: ", reader)
+		var count64, err64 = strconv.ParseUint(count, 10, 8)
+
+		if err64 != nil {
+			log.Fatal(err64)
+		}
+
+		item.count = uint8(count64)
+
+		price, _ := getPrompt("Enter Unit Price: ", reader)
+		var price64, errF64 = strconv.ParseFloat(price, 32)
+
+		if errF64 != nil {
+			log.Fatal(errF64)
+		}
+
+		item.price = float32(price64)
+
+		bill.items = append(bill.items, item)
+
+		getBillOptions(bill)
+	case "t":
+		tip, _ := getPrompt("Enter Your Tip: $", reader)
+
+		tip64, errT64 := strconv.ParseFloat(tip, 32)
+
+		if errT64 != nil {
+			log.Fatal(errT64)
+		}
+
+		bill.tip = float32(tip64)
+
+		getBillOptions(bill)
+	case "s":
+		fmt.Println("You chose 's'")
+	default:
+		fmt.Println("Invalid Selection!!! Try Again")
+		getBillOptions(bill)
+	}
+}
+
+func CreateBill() *BillType {
+	var reader *bufio.Reader = bufio.NewReader(os.Stdin) //* Very Important!!!
+
+	name, _ := getPrompt("Create a name for the bill: ", reader)
+
+	var bill *BillType = GetBill(name)
+
+	getBillOptions(bill)
+
+	fmt.Printf("New Bill Created: %v \n", *bill)
+
+	return bill
 }

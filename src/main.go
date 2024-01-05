@@ -216,6 +216,12 @@ func main() {
 
 	fmt.Println("###################")
 
+	var newBill *components.BillType = components.CreateBill()
+
+	fmt.Println(newBill.Format())
+
+	fmt.Println("###################")
+
 	wg.Wait() //* It should be at the end of "Main" thread code
 	//* wg.Wait() blocks until the WaitGroup count is 0 which is set by wg.Add()
 }
