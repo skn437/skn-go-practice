@@ -201,13 +201,20 @@ func main() {
 
 	//* Receiver Function
 
-	var myBills components.BillType = components.GetBill("Wang So")
+	var myBills *components.BillType = components.GetBill("Wang So")
+
+	myBills.AddItem("pizza", 2, 15.5)
+	myBills.AddItem("bread", 5, 12)
+	myBills.AddItem("coffee", 1, 2)
+	myBills.SetTip(10.0)
 
 	fmt.Println(myBills.Format())
 
 	var user1 utils.DataType = utils.GetData()
 
 	fmt.Println(user1.Format())
+
+	fmt.Println("###################")
 
 	wg.Wait() //* It should be at the end of "Main" thread code
 	//* wg.Wait() blocks until the WaitGroup count is 0 which is set by wg.Add()
