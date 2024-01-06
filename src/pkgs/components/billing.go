@@ -87,7 +87,7 @@ func getBillOptions(bill *BillType) {
 		item.title = title
 
 		count, _ := getPrompt("Enter Item Count: ", reader)
-		var count64, err64 = strconv.ParseUint(count, 10, 8)
+		count64, err64 := strconv.ParseUint(count, 10, 8)
 
 		if err64 != nil {
 			log.Fatal(err64)
@@ -96,7 +96,7 @@ func getBillOptions(bill *BillType) {
 		item.count = uint8(count64)
 
 		price, _ := getPrompt("Enter Unit Price: ", reader)
-		var price64, errF64 = strconv.ParseFloat(price, 32)
+		price64, errF64 := strconv.ParseFloat(price, 32)
 
 		if errF64 != nil {
 			log.Fatal(errF64)
@@ -120,7 +120,7 @@ func getBillOptions(bill *BillType) {
 
 		getBillOptions(bill)
 	case "s":
-		fmt.Println("You chose 's'")
+		saveBill(bill)
 	default:
 		fmt.Println("Invalid Selection!!! Try Again")
 		getBillOptions(bill)
@@ -139,4 +139,16 @@ func CreateBill() *BillType {
 	fmt.Printf("New Bill Created: %v \n", *bill)
 
 	return bill
+}
+
+func saveBill(bill *BillType) {
+	var data []byte = []byte(bill.Format())
+
+	var err error = os.WriteFile("files/"+bill.name+".txt", data, 0644) //* The location of created folder will be where `go.mod` is situated
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Bill Is Saved!")
 }

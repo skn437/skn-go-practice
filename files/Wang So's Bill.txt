@@ -1,0 +1,7 @@
+Wang So's Bill's Bill: 
+pizza:                    $36.9 
+pie:                      $4.8 
+cola:                     $0.92 
+ramen:                    $16.2 
+tip:                      $2 
+Total:                    $60.82 
