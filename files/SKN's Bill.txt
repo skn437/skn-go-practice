@@ -1,0 +1,6 @@
+SKN's Bill's Bill: 
+pizza:                    $25 
+pie:                      $6.8999996 
+cola:                     $1.8 
+tip:                      $2 
+Total:                    $35.7 
