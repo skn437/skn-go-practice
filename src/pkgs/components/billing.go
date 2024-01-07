@@ -144,11 +144,17 @@ func CreateBill() *BillType {
 func saveBill(bill *BillType) {
 	var data []byte = []byte(bill.Format())
 
-	var err error = os.WriteFile("files/"+bill.name+".txt", data, 0644) //* The location of created folder will be where `go.mod` is situated
+	var err error = os.WriteFile("files/"+bill.name+".log", data, 0644) //* The location of created folder will be where `go.mod` is situated
+	//* `0644` code gives permission
 
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("Bill Is Saved!")
+}
+
+func DeferPrint() {
+	defer fmt.Println("This prints later even if it is wriiten first.") //* `defer` keyword makes code run at the last
+	fmt.Println("This prints first even if it is wriiten later.")
 }
