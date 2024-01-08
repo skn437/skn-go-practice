@@ -31,11 +31,9 @@ func GetStatusCode(endpoint string) {
 		panic(err)
 	}
 
-	mutex.Lock()
-
-	*Signals = append(*Signals, endpoint)
-
-	mutex.Unlock()
+	mutex.Lock()                          //* Locks The Memory/Resources
+	*Signals = append(*Signals, endpoint) //* Put Mutex Wrapping around any write operation
+	mutex.Unlock()                        //* Unlocks The Memory/Resources
 
 	fmt.Printf("%d status code for endpoint %s \n", response.StatusCode, endpoint)
 
