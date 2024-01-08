@@ -12,8 +12,9 @@ func main() {
 
 	var websites *[]string = components.GetWebsiteList()
 
+	wg.Add(len(*websites))
+
 	for _, website := range *websites {
-		wg.Add(1)
 		go components.GetStatusCode(website)
 	}
 
