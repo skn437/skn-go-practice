@@ -135,7 +135,7 @@ func main() {
 	//* If There is no loop then "main" thread will not let another thread to execute code with 'go' keyword
 	//* In this case, "Workgroups" have to be used
 
-	wg.Add(4)                     //* `Add` sets the number of Goroutine to wait for
+	wg.Add(5)                     //* `Add` sets the number of Goroutine to wait for
 	go user.GetUserConfirmation() //* Goroutine (Concurrence) can be used with 'go' keyword
 
 	fmt.Printf("User: %v\n", user2)
