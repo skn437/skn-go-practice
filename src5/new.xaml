@@ -1,0 +1,5 @@
+<!DOCTYPE root-element [
+  <!ELEMENT root-element (#PCDATA)>
+]>
+<root-element>
+</root-element>
