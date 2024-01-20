@@ -1,5 +1,6 @@
 package main
 
+//* Hello!
 import "fmt"
 
 // * `defer` keyword practice
